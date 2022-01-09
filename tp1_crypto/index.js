@@ -1,13 +1,5 @@
-/*import * as express from 'express';
-import sha256 from 'crypto-js/sha256';
-import hmacSHA512 from 'crypto-js/hmac-sha512';
-import Base64 from 'crypto-js/enc-base64';
-import MD5 from "crypto-js/md5";*/
-
 const express = require('express');
-const sha256 = require('js-sha256').sha256;
-
-
+const sha512 = require('sha512');
 
 const PORT = 8080;
 const HOST = '127.0.0.1';
@@ -21,8 +13,9 @@ app.get('/', (req, res) => {
                 '<meta charset="UTF-8">'+
                 '<meta name= "description" content="tp1">' +
                 '<script src="http://www.myersdaily.org/joseph/javascript/md5.js"></script>' +
+                '<script src="https://cdn.jsdelivr.net/npm/keccak256@latest/keccak256.js"></script>'+
                 '<script>' +
-
+                    'const keccak256 = require("keccak256");'+
                     'function encryptMD5(){' +
                         'let texte = document.getElementById("textmd5").value;' +
                         'let hashMD5= md5(texte);' +
@@ -44,13 +37,18 @@ app.get('/', (req, res) => {
                     '}' +
 
                     'function encryptSHA512(){' +
-                        'let texte = document.getElementById("textsha512").value;' +
-                        'var crypto = require(\'crypto\');' +
-                        'var hash = crypto.createHash(\'sha512\');'+
-                        'data = hash.update(\'nodejsera\', \'utf-8\');'+
-                        'gen_hash= data.digest(\'hex\');'+
-                        'console.log("hash : " + gen_hash);'+
-                    '}' + 
+                        'let texte = document.getElementById("textsha512").value;'+
+                        'let hash = sha512(texte);'+
+                        'console.log(hash.toString());'+
+                    '}' +
+
+                    'function encryptkeccak256(){' +
+                        'let texte = document.getElementById("textkeccak256").value;'+
+                        'const keccak256 = require(keccak256)\n;'+
+                        'console.log(keccak256(texte).toString(hex));'+
+                        'console.log(keccak256(Buffer.from(texte)).toString(\'hex\'))'+
+                    '}' +
+
                 '</script>' +
             '</head>' +
             '<body>' +
@@ -63,11 +61,16 @@ app.get('/', (req, res) => {
                     '<h5 class="titre"> SHA2-256 </h5>'+
                     'Veuillez saisir le texte à chiffrer :<br/>'+
                     '<input type="text" name="text" id="textsha256" />' +
+                    //'<input type="text" name="text" id="keysha256" />' +
                     '<input type="button" onclick="encryptSHA256()" value="Encrypt"/>' +
                     '<h5 class="titre"> SHA3-512 </h5>'+
                     'Veuillez saisir le texte à chiffrer :<br/>'+
                     '<input type="text" name="text" id="textsha512" />' +
                     '<input type="button" onclick="encryptSHA512()" value="Encrypt"/>' +
+                    '<h5 class="titre"> keccak256 </h5>'+
+                    'Veuillez saisir le texte à chiffrer :<br/>'+
+                    '<input type="text" name="text" id="textkeccak256" />' +
+                    '<input type="button" onclick="encryptkeccak256()" value="Encrypt"/>' +
                 '</form>' +
             '</body>' +
         '</html>'
