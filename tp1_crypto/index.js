@@ -22,6 +22,12 @@ app.get('/', (req, res) => {
                         'console.log(hashMD5);' +
                     '}' +
 
+                    'function decryptMD5(){'+
+                        ''+
+                        ''+
+                        ''+
+                    '}'+
+
                     'async function sha256(message) {'+
                         'let msgBuffer = new TextEncoder(\'utf-8\').encode(message);'+
                         'let hashBuffer = await crypto.subtle.digest(\'SHA-256\', msgBuffer);'+
@@ -39,15 +45,17 @@ app.get('/', (req, res) => {
                     'function encryptSHA512(){' +
                         'let texte = document.getElementById("textsha512").value;'+
                         'let hash = sha512(texte);'+
-                        'console.log(hash.toString());'+
+                        'console.log(hash.toString(hex));'+
                     '}' +
 
                     'function encryptkeccak256(){' +
                         'let texte = document.getElementById("textkeccak256").value;'+
-                        'const keccak256 = require(keccak256)\n;'+
+                       // 'const keccak256 = require(keccak256)\n;'+
                         'console.log(keccak256(texte).toString(hex));'+
                         'console.log(keccak256(Buffer.from(texte)).toString(\'hex\'))'+
                     '}' +
+
+                    '' +
 
                 '</script>' +
             '</head>' +
@@ -58,6 +66,10 @@ app.get('/', (req, res) => {
                     'Veuillez saisir le texte à chiffrer :<br/>' +
                     '<input type="text" name="text" id="textmd5" />' +
                     '<input type="button" onclick="encryptMD5()" value="Encrypt"/>' +
+                    '<h5 class="titre"> MD5 </h5>'+
+                    'Veuillez saisir le texte à déchiffrer :<br/>' +
+                    '<input type="text" name="text" id="textmd5" />' +
+                    '<input type="button" onclick="decryptMD5()" value="Decrypt"/>' +
                     '<h5 class="titre"> SHA2-256 </h5>'+
                     'Veuillez saisir le texte à chiffrer :<br/>'+
                     '<input type="text" name="text" id="textsha256" />' +
@@ -68,6 +80,7 @@ app.get('/', (req, res) => {
                     '<input type="text" name="text" id="textsha512" />' +
                     '<input type="button" onclick="encryptSHA512()" value="Encrypt"/>' +
                     '<h5 class="titre"> keccak256 </h5>'+
+                    'Veuillez saisir le texte à chiffrer :<br/>'+
                     'Veuillez saisir le texte à chiffrer :<br/>'+
                     '<input type="text" name="text" id="textkeccak256" />' +
                     '<input type="button" onclick="encryptkeccak256()" value="Encrypt"/>' +
